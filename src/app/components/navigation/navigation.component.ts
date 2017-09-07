@@ -12,7 +12,15 @@ export class NavigationComponent {
   constructor(private userService: UserService, private router: Router) { }
 
   logout() {
-    this.userService.logout().subscribe();
-    this.router.navigate(['/']);
+    this.userService.logout().subscribe(resp => {
+
+      if (resp) {
+        this.router.navigate(['/logout']);
+      }
+      else {
+        console.log('something went wrong....');
+      }
+
+    });
   }
 }
