@@ -1,12 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
-import { PostsComponent } from './components/posts/posts.component';
+import { OverviewComponent } from './components/overview/overview.component';
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -14,13 +17,15 @@ import { PostsComponent } from './components/posts/posts.component';
     LoginComponent,
     RegisterComponent,
     NavigationComponent,
-    PostsComponent
+    OverviewComponent
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    HttpModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
