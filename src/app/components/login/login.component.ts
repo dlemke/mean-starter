@@ -10,14 +10,15 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   loginInvalid: boolean = false;
-  
+
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  login(formValues) {
-    this.userService.authenticateUser(formValues.userName, formValues.password)
+  login(loginFormValues) {
+
+    this.userService.authenticateUser(loginFormValues.userName, loginFormValues.password)
       .subscribe(resp => {
         if (!resp) {
           this.loginInvalid = true;

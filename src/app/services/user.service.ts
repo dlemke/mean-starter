@@ -12,9 +12,9 @@ export class UserService {
   register(userName: string, password: string) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let registerInfo = { UserName: userName, Password: password };
+    let registrationInfo = { username: userName, password: password };
 
-    return this.http.post('api/register', JSON.stringify(registerInfo), options)
+    return this.http.post('/api/users/register', JSON.stringify(registrationInfo), options)
       .do(resp => {
         if (resp) {
           this.currentUser = <IUserModel>resp.json();
@@ -27,9 +27,9 @@ export class UserService {
   authenticateUser(userName: string, password: string) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
-    let loginInfo = { UserName: userName, Password: password };
+    let loginInfo = { username: userName, password: password };
 
-    return this.http.post('api/login', JSON.stringify(loginInfo), options)
+    return this.http.post('/api/users/login', JSON.stringify(loginInfo), options)
       .do(resp => {
         if (resp) {
           this.currentUser = <IUserModel>resp.json();
@@ -44,7 +44,7 @@ export class UserService {
   }
 
   checkStatus() {
-    return this.http.get('api/status')
+    return this.http.get('/api/users/status')
       .map((response: any) => {
         if (response._body) {
           return response.json();
@@ -60,13 +60,8 @@ export class UserService {
   }
 
   logout() {
-    let logoutInfo = { UserName: this.currentUser.userName, Password: '' };
     this.currentUser = undefined;
-
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-
-    return this.http.post('api/logout', JSON.stringify(logoutInfo), options);
+    return this.http.get('/api/users/logout', {});
   }
 
   private handleError(error: Response) {
