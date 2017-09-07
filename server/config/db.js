@@ -30,4 +30,4 @@ process.on('SIGINT', function () {
 });
 
 // BRING IN SCHEMAS & MODELS
-require('../models/post.model');
+require('../models/user.model');

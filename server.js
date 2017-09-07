@@ -3,12 +3,16 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const config = require('./server/config/config');
 
 // Hook into mongodb
-var db = require('./server/config/db');
+const db = require('./server/config/db');
 
 // Get our API routes
 const api = require('./server/routes/api');
+const users = require('./server/routes/users');
 
 const app = express();
 
@@ -17,12 +21,26 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+app.use(require('express-session')({
+  secret: config.secret,
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // Set our api routes
 app.use('/api', api);
+app.use('/api/users', users);
+
+// passport config
+var User = require('./server/models/user.model');
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {

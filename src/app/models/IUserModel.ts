@@ -1,6 +1,6 @@
 export interface IUserModel {
     _id: number;
     userName: string;
-    password: string;
+    sessionId: string;
     isAuthenticated: Boolean;
 }
