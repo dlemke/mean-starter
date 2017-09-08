@@ -15,7 +15,11 @@ export class UserService {
     let registrationInfo = { username: userName, password: password };
 
     return this.http.post('/api/users/register', JSON.stringify(registrationInfo), options)
-      .map((response: Response) => { return <IUserModel>response.json(); })
+      .do(response => {
+        if (response) {
+          this.currentUser = <IUserModel>response.json();
+        }
+      })
       .catch(this.handleError);
   }
 
@@ -25,7 +29,11 @@ export class UserService {
     let loginInfo = { username: userName, password: password };
 
     return this.http.post('/api/users/login', JSON.stringify(loginInfo), options)
-      .map((response: Response) => { return <IUserModel>response.json(); })
+      .do(response => {
+        if (response) {
+          this.currentUser = <IUserModel>response.json();
+        }
+      })
       .catch(this.handleError);
   }
 
