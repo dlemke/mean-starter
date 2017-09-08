@@ -39,10 +39,6 @@ export class UserService {
       });
   }
 
-  isAuthenticated() {
-    return !!this.currentUser;
-  }
-
   checkStatus() {
     return this.http.get('/api/users/status')
       .map((response: any) => {
