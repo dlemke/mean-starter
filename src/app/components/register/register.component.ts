@@ -15,20 +15,19 @@ export class RegisterComponent {
   constructor(private userService: UserService, private router: Router) { }
 
   register(formValues) {
-
     this.registrationInvalid = false;
-
     this.userService.register(formValues.userName, formValues.password)
-      .map((err, res) => {
-        this.regError = err;
-      })
-      .subscribe(response => {
-        if (!response) {
-          this.registrationInvalid = true;
-        }
-        else {
+      .map((res, err) => {
+
+        if (res && err === 0) {
           this.router.navigate(['']);
         }
-      });
+        else {
+          this.registrationInvalid = true;
+          this.regError = res;
+        }
+
+      })
+      .subscribe();
   }
 }
