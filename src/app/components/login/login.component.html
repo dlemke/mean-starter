@@ -17,7 +17,7 @@
 
       </div>
       <a routerLink="/register" routerLinkActive="active" class="text-center new-account">Create an account </a>
-      <div *ngIf="loginInvalid" class="alert alert-danger">{{loginError?.message}}</div>
+      <div *ngIf="loginInvalid" class="alert alert-danger">{{loginError?.info.message}}</div>
     </div>
   </div>
 </div>

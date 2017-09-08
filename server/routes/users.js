@@ -43,6 +43,7 @@ router.post('/login', (req, res, next) => {
       return res.status(401).send({
         success: false,
         message: 'Authentication failed',
+        info: info,
         isAuthenticated: req.isAuthenticated()
       });
     }
