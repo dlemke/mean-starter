@@ -9,13 +9,15 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  loginInvalid: boolean = false;
+  loginInvalid: boolean;
 
   constructor(private userService: UserService, private router: Router) { }
 
-  login(loginFormValues) {
+  login(loginValues) {
 
-    this.userService.login(loginFormValues.userName, loginFormValues.password)
+    this.loginInvalid = false;
+
+    this.userService.login(loginValues.userName, loginValues.password)
       .subscribe(resp => {
         if (!resp) {
           this.loginInvalid = true;

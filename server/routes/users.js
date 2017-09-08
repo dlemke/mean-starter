@@ -9,20 +9,14 @@ router.post('/register', (req, res, next) => {
   }), req.body.password, (err, user) => {
 
     if (err) {
-      res.status(400).send({
-        error: err.message,
-        stack: err.stack
-      });
+      res.status(400).send(err);
     } else {
 
       passport.authenticate('local')(req, res, () => {
         req.session.save((err) => {
 
           if (err) {
-            res.status(400).send({
-              error: err.message,
-              stack: err.stack
-            });
+            res.status(400).send(err);
           } else {
             res.send({
               _id: req.user._id,
@@ -38,13 +32,10 @@ router.post('/register', (req, res, next) => {
   });
 });
 
-router.post('/login', passport.authenticate('local', {}), (req, res, next) => {
+router.post('/login', passport.authenticate('local'), (req, res, next) => {
   req.session.save((err) => {
     if (err) {
-      res.status(400).send({
-        error: err.message,
-        stack: err.stack
-      });
+      res.status(400).send(err);
     } else {
       res.send({
         _id: req.user._id,
@@ -67,10 +58,7 @@ router.get('/logout', (req, res, next) => {
   req.logout();
   req.session.save((err) => {
     if (err) {
-      res.status(400).send({
-        error: err.message,
-        stack: err.stack
-      });
+      res.status(400).send(err);
     } else {
       res.send({
         success: true,

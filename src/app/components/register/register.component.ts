@@ -9,15 +9,21 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
 
-  registrationInvalid: boolean = false;
+  registrationInvalid: boolean;
+  regError: any;
 
   constructor(private userService: UserService, private router: Router) { }
 
   register(formValues) {
 
+    this.registrationInvalid = false;
+
     this.userService.register(formValues.userName, formValues.password)
-      .subscribe(resp => {
-        if (!resp) {
+      .map((err, res) => {
+        this.regError = err;
+      })
+      .subscribe(response => {
+        if (!response) {
           this.registrationInvalid = true;
         }
         else {

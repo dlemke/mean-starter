@@ -59,6 +59,6 @@ export class UserService {
   }
 
   private handleError(error: Response) {
-    return Observable.throw(error.statusText);
+    return Observable.of(false, error.json());
   }
 }
