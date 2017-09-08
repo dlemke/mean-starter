@@ -9,46 +9,64 @@ router.post('/register', (req, res, next) => {
   }), req.body.password, (err, user) => {
 
     if (err) {
-      res.status(400).send(err);
-    } else {
-
-      passport.authenticate('local')(req, res, () => {
-        req.session.save((err) => {
-
-          if (err) {
-            res.status(400).send(err);
-          } else {
-            res.send({
-              _id: req.user._id,
-              userName: req.user.username,
-              sessionId: req.sessionID,
-              isAuthenticated: req.isAuthenticated()
-            });
-          }
-
-        });
-      });
+      return res.status(400).send(err);
     }
+
+    passport.authenticate('local')(req, res, () => {
+      req.session.save((err) => {
+
+        if (err) {
+          return res.status(400).send(err);
+        } else {          
+          return res.send({
+            _id: req.user._id,
+            userName: req.user.username,
+            sessionId: req.sessionID,
+            isAuthenticated: req.isAuthenticated()
+          });
+        }
+
+      });
+    });
+
   });
 });
 
-router.post('/login', passport.authenticate('local'), (req, res, next) => {
-  req.session.save((err) => {
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+
     if (err) {
-      res.status(400).send(err);
-    } else {
-      res.send({
+      return next(err);
+    }
+
+    if (!user) {
+      return res.status(401).send({
+        success: false,
+        message: 'Authentication failed',
+        isAuthenticated: req.isAuthenticated()
+      });
+    }
+
+    req.login(user, function (err) {
+
+      if (err) {
+        return next(err);
+      }
+
+      return res.send({
         _id: req.user._id,
         userName: req.user.username,
         sessionId: req.sessionID,
         isAuthenticated: req.isAuthenticated()
       });
-    }
-  });
+
+    });
+
+  })(req, res, next);
 });
 
 router.get('/status', (req, res) => {
-  res.send({
+  return res.send({
     sessionId: req.sessionID,
     isAuthenticated: req.isAuthenticated()
   });
@@ -58,9 +76,9 @@ router.get('/logout', (req, res, next) => {
   req.logout();
   req.session.save((err) => {
     if (err) {
-      res.status(400).send(err);
+      return res.status(400).send(err);
     } else {
-      res.send({
+      return res.send({
         success: true,
         isAuthenticated: req.isAuthenticated()
       });
