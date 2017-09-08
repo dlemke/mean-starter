@@ -7,8 +7,8 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Dependencies
 
-Local instance of [MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/).
-[Gulp](https://gulpjs.com/) installed globally for server development (`npm i -g gulp`).
+1. Local instance of [MongoDB Community Edition](https://docs.mongodb.com/manual/administration/install-community/).
+2. [Gulp](https://gulpjs.com/) installed globally for server development (`npm i -g gulp`).
 
 ## Setup project
 
