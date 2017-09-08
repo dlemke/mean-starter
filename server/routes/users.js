@@ -4,79 +4,80 @@ const passport = require('passport');
 const User = require('../models/user.model');
 
 router.post('/register', (req, res, next) => {
-    User.register(new User({
-        username: req.body.username
-    }), req.body.password, (err, user) => {
+  User.register(new User({
+    username: req.body.username
+  }), req.body.password, (err, user) => {
 
-        if (err) {
+    if (err) {
+      res.status(400).send({
+        error: err.message,
+        stack: err.stack
+      });
+    } else {
+
+      passport.authenticate('local')(req, res, () => {
+        req.session.save((err) => {
+
+          if (err) {
+            res.status(400).send({
+              error: err.message,
+              stack: err.stack
+            });
+          } else {
             res.send({
-                error: err.message,
-                stack: err.stack
+              _id: req.user._id,
+              userName: req.user.username,
+              sessionId: req.sessionID,
+              isAuthenticated: req.isAuthenticated()
             });
-        }
+          }
 
-        passport.authenticate('local')(req, res, () => {
-
-            req.session.save((err) => {
-
-                if (err) {
-                    res.send({
-                        error: err.message,
-                        stack: err.stack
-                    });
-                } else {
-                    res.send({
-                        _id: req.user._id,                        
-                        userName: req.user.username,
-                        sessionId: req.sessionID,
-                        isAuthenticated: req.isAuthenticated()
-                    });
-                }
-            });
         });
-    });
+      });
+    }
+  });
 });
 
 router.post('/login', passport.authenticate('local', {}), (req, res, next) => {
-    req.session.save((err) => {
-        if (err) {
-            res.send({
-                error: err.message,
-                stack: err.stack
-            });
-        } else {
-            res.send({
-                _id: req.user._id,                        
-                userName: req.user.username,
-                sessionId: req.sessionID,
-                isAuthenticated: req.isAuthenticated()
-            });
-        }
-    });
+  req.session.save((err) => {
+    if (err) {
+      res.status(400).send({
+        error: err.message,
+        stack: err.stack
+      });
+    } else {
+      res.send({
+        _id: req.user._id,
+        userName: req.user.username,
+        sessionId: req.sessionID,
+        isAuthenticated: req.isAuthenticated()
+      });
+    }
+  });
 });
 
 router.get('/status', (req, res) => {
-    res.send({
-        sessionId: req.sessionID,
-        isAuthenticated: req.isAuthenticated()
-    });
+  res.send({
+    sessionId: req.sessionID,
+    isAuthenticated: req.isAuthenticated()
+  });
 })
 
 router.get('/logout', (req, res, next) => {
-    req.logout();
-    req.session.save((err) => {
-        if (err) {
-            res.send({
-                error: err.message,
-                stack: err.stack
-            });
-        } else {
-            res.send({
-                success: true,
-                isAuthenticated: req.isAuthenticated()
-            });
-        }
-    });
+  req.logout();
+  req.session.save((err) => {
+    if (err) {
+      res.status(400).send({
+        error: err.message,
+        stack: err.stack
+      });
+    } else {
+      res.send({
+        success: true,
+        isAuthenticated: req.isAuthenticated()
+      });
+    }
+  });
 });
 
 module.exports = router;

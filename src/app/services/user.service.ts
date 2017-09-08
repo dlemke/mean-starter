@@ -15,31 +15,21 @@ export class UserService {
     let registrationInfo = { username: userName, password: password };
 
     return this.http.post('/api/users/register', JSON.stringify(registrationInfo), options)
-      .do(resp => {
-        if (resp) {
-          this.currentUser = <IUserModel>resp.json();
-        }
-      }).catch(error => {
-        return Observable.of(false);
-      });
+      .map((response: Response) => { return <IUserModel>response.json(); })
+      .catch(this.handleError);
   }
 
-  authenticateUser(userName: string, password: string) {
+  login(userName: string, password: string) {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let loginInfo = { username: userName, password: password };
 
     return this.http.post('/api/users/login', JSON.stringify(loginInfo), options)
-      .do(resp => {
-        if (resp) {
-          this.currentUser = <IUserModel>resp.json();
-        }
-      }).catch(error => {
-        return Observable.of(false);
-      });
+      .map((response: Response) => { return <IUserModel>response.json(); })
+      .catch(this.handleError);
   }
 
-  checkStatus() {
+  status() {
     return this.http.get('/api/users/status')
       .map((response: any) => {
         if (response._body) {
