@@ -10,21 +10,24 @@ import { Router } from '@angular/router';
 export class LoginComponent {
 
   loginInvalid: boolean;
+  loginError: any;
 
   constructor(private userService: UserService, private router: Router) { }
 
   login(loginValues) {
-
     this.loginInvalid = false;
-
     this.userService.login(loginValues.userName, loginValues.password)
-      .subscribe(resp => {
-        if (!resp) {
-          this.loginInvalid = true;
-        }
-        else {
+      .map((res, err) => {
+
+        if (res && err === 0) {
           this.router.navigate(['']);
         }
-      });
+        else {
+          this.loginInvalid = true;
+          this.loginError = res;
+        }
+
+      })
+      .subscribe();
   }
 }
