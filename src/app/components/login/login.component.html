@@ -16,7 +16,7 @@
         </form>
 
       </div>
-      <a routerLink="/register" routerLinkActive="active" class="text-center new-account">Create an account </a>
+      <a routerLink="/register" class="text-center new-account">Create an account </a>
       <div *ngIf="loginInvalid" class="alert alert-danger">{{loginError?.info.message}}</div>
     </div>
   </div>
