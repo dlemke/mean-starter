@@ -50,7 +50,7 @@ export class UserService {
         if (!!currentUser.userName) {
           this.currentUser = currentUser;
         }
-      }).subscribe();
+      });
   }
 
   logout() {

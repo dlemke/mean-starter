@@ -11,6 +11,9 @@ import { NavigationComponent } from './components/navigation/navigation.componen
 import { OverviewComponent } from './components/overview/overview.component';
 import { UserService } from './services/user.service';
 import { LogoutComponent } from './components/logout/logout.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { PostComponent } from './components/post/post.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,10 @@ import { LogoutComponent } from './components/logout/logout.component';
     RegisterComponent,
     NavigationComponent,
     OverviewComponent,
-    LogoutComponent
+    LogoutComponent,
+    ProfileComponent,
+    PostComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

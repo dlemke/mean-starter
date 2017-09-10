@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <div class="row content">
+    <div class="col-sm-3 sidenav">
+      <div class="well">
+        <i class="fa fa-user-circle-o" style="font-size: 125px;"></i>
+        <h1>{{ userService.currentUser?.userName }}</h1>
+        <p class="title">Software Engineer</p>
+        <p>Github University</p>
+        <a href="#"><i class="fa fa-github"></i></a>
+        <a href="#"><i class="fa fa-envelope"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+        <a href="#"><i class="fa fa-instagram"></i></a>
+        <p><button class="btn btn-lg btn-default btn-block" (click)="getUserStatus()">Refresh</button></p>
+      </div>
+    </div>
+    <div class="col-sm-9">
+      <app-settings></app-settings>
+    </div>
+  </div>
+</div>

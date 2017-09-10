@@ -68,10 +68,12 @@ router.post('/login', (req, res, next) => {
 
 router.get('/status', (req, res) => {
   return res.send({
+    _id: req.user._id,
+    userName: req.user.username,
     sessionId: req.sessionID,
     isAuthenticated: req.isAuthenticated()
   });
-})
+});
 
 router.get('/logout', (req, res, next) => {
   req.logout();

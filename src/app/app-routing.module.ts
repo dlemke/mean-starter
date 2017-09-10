@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'logout',
     component: LogoutComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   }
 ];
 
