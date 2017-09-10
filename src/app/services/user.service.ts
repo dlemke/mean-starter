@@ -37,6 +37,20 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  update(user_id, userName: string) {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let updateInfo = { username: userName };
+
+    return this.http.put('/api/users/update/' + user_id, JSON.stringify(updateInfo), options)
+      .do(response => {
+        if (response) {
+          this.currentUser = <IUserModel>response.json();
+        }
+      })
+      .catch(this.handleError);
+  }
+
   status() {
     return this.http.get('/api/users/status')
       .map((response: any) => {

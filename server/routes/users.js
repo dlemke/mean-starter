@@ -17,7 +17,7 @@ router.post('/register', (req, res, next) => {
 
         if (err) {
           return res.status(400).send(err);
-        } else {          
+        } else {
           return res.send({
             _id: req.user._id,
             userName: req.user.username,
@@ -64,6 +64,24 @@ router.post('/login', (req, res, next) => {
     });
 
   })(req, res, next);
+});
+
+router.put('/update/:id', (req, res, next) => {
+
+  var query = User.findByIdAndUpdate(req.params.id, {
+    username: req.body.username
+  }, {
+    new: true
+  });
+
+  query.exec(function (err, result) {
+    if (err) {
+      return next(err);
+    } else {
+      return res.json(result);
+    }
+  });
+
 });
 
 router.get('/status', (req, res) => {

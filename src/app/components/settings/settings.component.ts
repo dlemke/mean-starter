@@ -18,4 +18,8 @@ export class SettingsComponent implements OnInit {
     this.userService.status().subscribe();
   }
 
+  update(formValues) {
+    this.userService.update(this.userService.currentUser._id, formValues.userName).subscribe();
+  }
+
 }

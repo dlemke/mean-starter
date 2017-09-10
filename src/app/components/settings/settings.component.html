@@ -1,6 +1,6 @@
 <div class="container">
   <div class="row">
-    <form class="form-horizontal">
+    <form #updateForm="ngForm" (ngSubmit)="update(updateForm.value)" class="form-horizontal">
       <fieldset>
 
         <legend>Profile Settings</legend>
@@ -8,8 +8,7 @@
         <div class="form-group">
           <label class="col-md-4 control-label" for="userName">User Name</label>
           <div class="col-md-4">
-            <input name="userName" value="{{userService.currentUser?.userName}}" class="form-control input-md"
-              type="text">
+            <input name="userName" value="{{userService.currentUser?.userName}}" class="form-control input-md" type="text">
           </div>
         </div>
         <hr>
@@ -39,7 +38,7 @@
         <div class="form-group">
           <label class="col-md-4 control-label" for="FormAddBlock"></label>
           <div class="col-md-4 text-right">
-            <button class="btn btn-primary">Update</button>
+            <button class="btn btn-primary" type="submit">Update</button>
           </div>
         </div>
 
