@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { IUserModel } from '../../models/IUserModel';
 
@@ -7,13 +7,9 @@ import { IUserModel } from '../../models/IUserModel';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
 
   constructor(private userService: UserService) { }
-
-  ngOnInit() {
-    this.getUserStatus();
-  }
 
   getUserStatus() {
     this.userService.status().subscribe();

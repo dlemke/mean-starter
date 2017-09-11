@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div *ngIf="userService.currentUser?.isAuthenticated" class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav">
       <div class="well">
@@ -17,4 +17,7 @@
       <app-settings></app-settings>
     </div>
   </div>
+</div>
+<div *ngIf="!userService.currentUser?.isAuthenticated" class="container">
+  <p class="lead">You are not authorized to view this page.</p>
 </div>
