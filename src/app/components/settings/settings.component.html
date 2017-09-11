@@ -8,7 +8,7 @@
         <div class="form-group">
           <label class="col-md-4 control-label" for="userName">User Name</label>
           <div class="col-md-4">
-            <input name="userName" value="{{userService.currentUser?.userName}}" class="form-control input-md" type="text">
+            <input name="userName" value="{{userService.currentUser?.userName}}" class="form-control" type="text" readonly>
           </div>
         </div>
         <hr>
@@ -16,29 +16,28 @@
         <div class="form-group">
           <label class="col-md-4 control-label" for="userId">User Id</label>
           <div class="col-md-4">
-            <input name="userId" value="{{userService.currentUser?._id}}" class="form-control input-md" type="text" readonly>
+            <input name="userId" value="{{userService.currentUser?._id}}" class="form-control" type="text" readonly>
           </div>
         </div>
 
         <div class="form-group">
           <label class="col-md-4 control-label" for="sessionId">Session Id</label>
           <div class="col-md-4">
-            <input name="sessionId" value="{{userService.currentUser?.sessionId}}" class="form-control input-md" type="text" readonly>
+            <input name="sessionId" value="{{userService.currentUser?.sessionId}}" class="form-control" type="text" readonly>
           </div>
         </div>
 
         <div class="form-group">
           <label class="col-md-4 control-label" for="isAuthenticated">Authenticated</label>
           <div class="col-md-4">
-            <input name="isAuthenticated" value="{{userService.currentUser?.isAuthenticated}}" class="form-control input-md" type="text"
-              readonly>
+            <input name="isAuthenticated" value="{{userService.currentUser?.isAuthenticated}}" class="form-control" type="text" readonly>
           </div>
         </div>
 
         <div class="form-group">
           <label class="col-md-4 control-label" for="FormAddBlock"></label>
           <div class="col-md-4 text-right">
-            <button class="btn btn-primary" type="submit">Update</button>
+            <button class="btn btn-primary" type="submit">Edit</button>
           </div>
         </div>
 

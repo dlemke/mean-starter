@@ -12,7 +12,6 @@ import { OverviewComponent } from './components/overview/overview.component';
 import { UserService } from './services/user.service';
 import { LogoutComponent } from './components/logout/logout.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { PostComponent } from './components/post/post.component';
 import { SettingsComponent } from './components/settings/settings.component';
 
 @NgModule({
@@ -24,7 +23,6 @@ import { SettingsComponent } from './components/settings/settings.component';
     OverviewComponent,
     LogoutComponent,
     ProfileComponent,
-    PostComponent,
     SettingsComponent
   ],
   imports: [

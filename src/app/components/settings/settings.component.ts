@@ -19,6 +19,7 @@ export class SettingsComponent implements OnInit {
   }
 
   update(formValues) {
+    console.log(formValues);
     this.userService.update(this.userService.currentUser._id, formValues.userName).subscribe();
   }
 
