@@ -49,8 +49,8 @@ router.post('/login', (req, res, next) => {
       return res.status(401).send({
         success: false,
         message: 'Authentication failed',
-        info: info,
-        isAuthenticated: req.isAuthenticated()
+        info: session.message,
+        isAuthenticated: session.authenticated
       });
     }
 
@@ -64,10 +64,10 @@ router.post('/login', (req, res, next) => {
       userSessionCtrl.logSession(req, res, session);
 
       return res.send({
-        _id: req.user._id,
-        userName: req.user.username,
-        sessionId: req.sessionID,
-        isAuthenticated: req.isAuthenticated()
+        _id: session.userId,
+        userName: session.userName,
+        sessionId: session.sessionId,
+        isAuthenticated: session.authenticated
       });
 
     });
@@ -103,16 +103,12 @@ router.get('/status', (req, res) => {
 });
 
 router.get('/logout', (req, res, next) => {
+  req.session.destroy();
   req.logout();
-  req.session.save((err) => {
-    if (err) {
-      return res.status(400).send(err);
-    } else {
-      return res.send({
-        success: true,
-        isAuthenticated: req.isAuthenticated()
-      });
-    }
+
+  return res.send({
+    success: true,
+    isAuthenticated: req.isAuthenticated()
   });
 });
 
@@ -122,7 +118,7 @@ createSession = function (req, res, info, isValid) {
     userName: isValid ? req.user.username : req.body.username,
     sessionId: isValid ? req.sessionID : null,
     authenticated: req.isAuthenticated(),
-    message: isValid ? 'Successful user login.' : info.message,
+    message: isValid ? { message: 'Successful user login.' } : info,
     whenOccurred: Date.now(),
     ipAddress: getClientIP(req)
   });

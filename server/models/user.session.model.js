@@ -6,10 +6,8 @@ var UserSessionSchema = new mongoose.Schema({
     userName: String,
     sessionId: String,
     authenticated: Boolean,
-    message: String,
-    token: String,
+    message: Object,
     whenOccurred: Date,
-    whenExpire: Date,
     ipAddress: String
 });
 
