@@ -19,14 +19,14 @@ router.post('/register', (req, res, next) => {
 
         if (err) {
           return res.status(400).send(err);
-        } else {
-          return res.send({
-            _id: req.user._id,
-            userName: req.user.username,
-            sessionId: req.sessionID,
-            isAuthenticated: req.isAuthenticated()
-          });
         }
+
+        return res.send({
+          _id: req.user._id,
+          userName: req.user.username,
+          sessionId: req.sessionID,
+          isAuthenticated: req.isAuthenticated()
+        });
 
       });
     });
@@ -86,9 +86,10 @@ router.put('/update/:id', (req, res, next) => {
   query.exec(function (err, result) {
     if (err) {
       return next(err);
-    } else {
-      return res.json(result);
     }
+
+    return res.json(result);
+
   });
 
 });
@@ -112,7 +113,7 @@ router.get('/logout', (req, res, next) => {
   });
 });
 
-createSession = function (req, res, info, isValid) {
+function createSession(req, res, info, isValid) {
   var session = new UserSession({
     userId: isValid ? req.user._id : null,
     userName: isValid ? req.user.username : req.body.username,
@@ -120,13 +121,13 @@ createSession = function (req, res, info, isValid) {
     authenticated: req.isAuthenticated(),
     message: isValid ? { message: 'Successful user login.' } : info,
     whenOccurred: Date.now(),
-    ipAddress: getClientIP(req)
+    ipAddress: getClientIp(req)
   });
 
   return session;
 }
 
-getClientIP = function (req) {
+function getClientIp(req) {
   return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 }
 
