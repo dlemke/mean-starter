@@ -31,3 +31,4 @@ process.on('SIGINT', function () {
 
 // BRING IN SCHEMAS & MODELS
 require('../models/user.model');
+require('../models/user.session.model');
