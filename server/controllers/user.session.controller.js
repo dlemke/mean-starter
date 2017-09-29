@@ -16,9 +16,9 @@ exports.logSession = function (req, res, session) {
 
     userSession.save((err, session) => {
         if (err) {
-            console.log('Error saving user session.');
+            console.log('Error logging user session.');
         } else {
-            console.log('Saved User Session!')
+            console.log('User session has been logged.')
         }
     });
 };
