@@ -5,28 +5,20 @@ var UserSession = require('../models/user.session.model');
 exports.logSession = function (req, res, session) {
 
     var userSession = new UserSession({
-        userId: req.user._id,
-        userName: req.user.username,
-        sessionId: req.sessionId,
-        authenticated: session.success,
+        userId: session.userId,
+        userName: session.userName,
+        sessionId: session.sessionId,
+        authenticated: session.authenticated,
         message: session.message,
-        token: session.token,
         whenOccurred: session.whenOccurred,
-        whenExpire: session.whenExpire,
-        ipAddress: req.connection.remoteAddress
+        ipAddress: session.ipAddress
     });
 
-    userSession.save((err) => {
-
+    userSession.save((err, session) => {
         if (err) {
-            res.status(401).send({
-                error: err,
-                stack: err.stack
-            });
+            console.log('Error saving user session.');
         } else {
-            res.status(200).send({
-                message: 'session saved'
-            });
+            console.log('Saved User Session!')
         }
     });
 };
