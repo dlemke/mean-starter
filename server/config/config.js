@@ -1,4 +1,6 @@
 module.exports = {
     secret: 'YOUR_SECRET',
-    database: 'mongodb://localhost/meanstarter'
+    mongodb: {
+        url: 'mongodb://localhost/meanstarter'
+    }
 };
