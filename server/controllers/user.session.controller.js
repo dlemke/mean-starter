@@ -15,3 +15,21 @@ exports.logSession = function (req, res, session) {
 
 };
 
+exports.createSession = function (req, res, info, isValid) {
+    var session = new UserSession({
+        userId: isValid ? req.user._id : null,
+        userName: isValid ? req.user.username : req.body.username,
+        sessionId: isValid ? req.sessionID : null,
+        authenticated: req.isAuthenticated(),
+        message: isValid ? { name: 'SuccessfulLogin', message: 'User was successfully authenticated.' } : info,
+        whenOccurred: Date.now(),
+        ipAddress: getClientIp(req)
+    });
+
+    return session;
+};
+
+function getClientIp(req) {
+    return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+};
+

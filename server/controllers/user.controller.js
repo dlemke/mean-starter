@@ -44,7 +44,7 @@ exports.login = function (req, res, next) {
 
         if (!user) {
 
-            var session = createSession(req, res, info, false);
+            var session = userSessionCtrl.createSession(req, res, info, false);
             userSessionCtrl.logSession(req, res, session);
 
             return res.status(401).send({
@@ -61,7 +61,7 @@ exports.login = function (req, res, next) {
                 return next(err);
             }
 
-            var session = createSession(req, res, info, true);
+            var session = userSessionCtrl.createSession(req, res, info, true);
             userSessionCtrl.logSession(req, res, session);
 
             return res.send({
@@ -109,22 +109,4 @@ exports.logout = function (req, res) {
         success: true,
         isAuthenticated: req.isAuthenticated()
     });
-};
-
-function createSession(req, res, info, isValid) {
-    var session = new UserSession({
-        userId: isValid ? req.user._id : null,
-        userName: isValid ? req.user.username : req.body.username,
-        sessionId: isValid ? req.sessionID : null,
-        authenticated: req.isAuthenticated(),
-        message: isValid ? { message: 'Successful user login.' } : info,
-        whenOccurred: Date.now(),
-        ipAddress: getClientIp(req)
-    });
-
-    return session;
-};
-
-function getClientIp(req) {
-    return req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 };
