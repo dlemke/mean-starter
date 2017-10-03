@@ -12,7 +12,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Setup project
 
-Run `npm install` to load project dependencies followed by `ng build`. Once you have the `dist` folder generated, you can then serve up the app by running `gulp` from your terminal. Express with serve up your `index.html` file located in the `dist` folder. Server development has live reload setup with nodemon but any UI or client side changes will need to be built again. For straight client side development you can use `ng serve` as you normally would with any Angular 4 app. However, any back end calls to node/express will not be available during this time.
+Run `npm install` to load project dependencies followed by `gulp` from your terminal. Gulp will run `ng build` and create the `dist` folder which Express can then use to serve up your `index.html` file located in the `dist` folder. Server development has live reload setup with nodemon but any UI or client side changes will need to be built again by running `ng build` or restarting the project (`Ctrl + C` followed by `gulp`). For straight client side development you can use `ng serve` as you normally would with any Angular 4 app. However, any back end calls to node/express will not be available during this time.
 
 ## Development server
 
