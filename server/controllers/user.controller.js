@@ -93,15 +93,18 @@ exports.update = function (req, res, next) {
 };
 
 exports.getStatus = function (req, res) {
-    return res.send({
-        _id: req.user._id,
-        userName: req.user.username,
-        sessionId: req.sessionID,
-        isAuthenticated: req.isAuthenticated()
-    });
+    if (req.user) {
+        return res.send({
+            _id: req.user._id,
+            userName: req.user.username,
+            sessionId: req.sessionID,
+            isAuthenticated: req.isAuthenticated()
+        });
+    }
 };
 
 exports.logout = function (req, res) {
+    userSessionCtrl.logoutSession(req, res);
     req.session.destroy();
     req.logout();
 

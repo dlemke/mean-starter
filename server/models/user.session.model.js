@@ -11,7 +11,8 @@ var UserSessionSchema = new mongoose.Schema({
     sessionId: String,
     authenticated: Boolean,
     message: Object,
-    whenOccurred: Date,
+    signedIn: Date,
+    signedOut: Date,
     ipAddress: String
 }, options);
 

@@ -22,11 +22,20 @@ exports.createSession = function (req, res, info, isValid) {
         sessionId: isValid ? req.sessionID : null,
         authenticated: req.isAuthenticated(),
         message: isValid ? { name: 'SuccessfulLogin', message: 'User was successfully authenticated.' } : info,
-        whenOccurred: Date.now(),
+        signedIn: Date.now(),
+        signedOut: null,
         ipAddress: getClientIp(req)
     });
 
     return session;
+};
+
+exports.logoutSession = function (req, res) {
+    UserSession.findOneAndUpdate({ sessionId: req.sessionID }, { signedOut: Date.now() }, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
 };
 
 function getClientIp(req) {

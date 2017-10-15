@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
@@ -7,9 +7,13 @@ import { UserService } from '../../services/user.service';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.scss']
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router) { }
+
+  ngOnInit() {
+    this.userService.status().subscribe();
+  }
 
   logout() {
     this.userService.logout().subscribe(resp => {
