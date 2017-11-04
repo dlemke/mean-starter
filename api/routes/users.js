@@ -2,24 +2,14 @@ const express = require('express');
 const router = express.Router();
 const userCtrl = require('../controllers/user.controller');
 
-router.post('/register', (req, res, next) => {
-  userCtrl.register(req, res, next);
-});
+router.post('/register', userCtrl.register);
 
-router.post('/login', (req, res, next) => {
-  userCtrl.login(req, res, next);
-});
+router.post('/login', userCtrl.login);
 
-router.put('/update/:id', (req, res, next) => {
-  userCtrl.update(req, res, next);
-});
+router.put('/update/:id', userCtrl.update);
 
-router.get('/status', (req, res) => {
-  userCtrl.getStatus(req, res);
-});
+router.get('/status', userCtrl.getStatus);
 
-router.get('/logout', (req, res) => {
-  userCtrl.logout(req, res);
-});
+router.get('/logout', userCtrl.logout);
 
 module.exports = router;
