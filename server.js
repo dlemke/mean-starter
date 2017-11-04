@@ -5,14 +5,14 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const config = require('./server/config/config');
+const config = require('./api/config/config');
 
 // Hook into mongodb
-const db = require('./server/config/db');
+const db = require('./api/config/db');
 
 // Get our API routes
-const api = require('./server/routes/api');
-const users = require('./server/routes/users');
+const api = require('./api/routes/api');
+const users = require('./api/routes/users');
 
 const app = express();
 
@@ -37,7 +37,7 @@ app.use('/api', api);
 app.use('/api/users', users);
 
 // Passport config
-var User = require('./server/models/user.model');
+var User = require('./api/models/user.model');
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
