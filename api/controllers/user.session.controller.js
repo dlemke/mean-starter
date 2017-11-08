@@ -1,10 +1,7 @@
 
-var mongoose = require('mongoose');
-var UserSession = require('../models/user.session.model');
-
 exports.logSession = function (req, res, session) {
 
-    var userSession = new UserSession(session);
+    var userSession = new req.models.UserSession(session);
     userSession.save((err) => {
         if (err) {
             console.log('Error logging user session.');
@@ -16,7 +13,7 @@ exports.logSession = function (req, res, session) {
 };
 
 exports.createSession = function (req, res, info, isValid) {
-    var session = new UserSession({
+    var session = new req.models.UserSession({
         userId: isValid ? req.user._id : null,
         userName: isValid ? req.user.username : req.body.username,
         sessionId: isValid ? req.sessionID : null,
@@ -31,7 +28,7 @@ exports.createSession = function (req, res, info, isValid) {
 };
 
 exports.logoutSession = function (req, res) {
-    UserSession.findOneAndUpdate({ sessionId: req.sessionID }, { signedOut: Date.now() }, (err) => {
+    req.models.UserSession.findOneAndUpdate({ sessionId: req.sessionID }, { signedOut: Date.now() }, (err) => {
         if (err) {
             console.log(err);
         }

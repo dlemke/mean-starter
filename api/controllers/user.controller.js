@@ -1,12 +1,9 @@
-const mongoose = require('mongoose');
 const passport = require('passport');
-const User = require('../models/user.model');
-const UserSession = require('../models/user.session.model');
 const userSessionCtrl = require('../controllers/user.session.controller');
 
 exports.register = function (req, res, next) {
 
-    User.register(new User({
+    req.models.User.register(new req.models.User({
         username: req.body.username
     }), req.body.password, (err, user) => {
 
@@ -78,7 +75,7 @@ exports.login = function (req, res, next) {
 
 exports.update = function (req, res, next) {
 
-    var query = User.findByIdAndUpdate(req.params.id, {
+    var query = req.models.User.findByIdAndUpdate(req.params.id, {
         username: req.body.username
     }, { new: true });
 
