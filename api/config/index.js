@@ -1,21 +1,14 @@
-module.exports = {
-    secret: 'YOUR_SECRET',
-    mongodb: {
-        url: 'mongodb://localhost/meanstarter'
-    }
-};
-
 // Bring Mongoose into the app
 var mongoose = require('mongoose');
 var config = require('./index');
 
 // Create the database connection
-mongoose.connect(config.mongodb.url);
+mongoose.connect(process.env.MONGODB);
 
 // CONNECTION EVENTS
 // When successfully connected
 mongoose.connection.on('connected', function () {
-    console.log('Mongoose default connection open to ' + config.mongodb.url);
+    console.log('Mongoose default connection open to ' + process.env.MONGODB);
 });
 
 // If the connection throws an error

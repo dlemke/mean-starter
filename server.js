@@ -5,6 +5,7 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
+  dotenv = require('dotenv').load(),
   models = require('./api/models'),
   config = require('./api/config');
 
@@ -20,7 +21,7 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(require('express-session')({
-  secret: config.secret,
+  secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false
 }));
