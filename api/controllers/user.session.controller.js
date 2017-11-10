@@ -29,9 +29,7 @@ exports.createSession = function (req, res, info, isValid) {
 
 exports.logoutSession = function (req, res) {
     req.models.UserSession.findOneAndUpdate({ sessionId: req.sessionID }, { signedOut: Date.now() }, (err) => {
-        if (err) {
-            console.log(err);
-        }
+        if (err) console.log(err);
     });
 };
 

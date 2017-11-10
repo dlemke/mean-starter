@@ -3,20 +3,15 @@ const userSessionCtrl = require('../controllers/user.session.controller');
 
 exports.register = function (req, res, next) {
 
-    req.models.User.register(new req.models.User({
-        username: req.body.username
-    }), req.body.password, (err, user) => {
+    var newUser = new req.models.User({ username: req.body.username });
+    req.models.User.register(newUser, req.body.password, (err, user) => {
 
-        if (err) {
-            return res.status(400).send(err);
-        }
+        if (err) return res.status(400).send(err);
 
         passport.authenticate('local')(req, res, () => {
             req.session.save((err) => {
 
-                if (err) {
-                    return res.status(400).send(err);
-                }
+                if (err) return res.status(400).send(err);
 
                 return res.send({
                     _id: req.user._id,
@@ -35,12 +30,9 @@ exports.login = function (req, res, next) {
 
     passport.authenticate('local', (err, user, info) => {
 
-        if (err) {
-            return next(err);
-        }
+        if (err) return res.status(400).send(err);
 
         if (!user) {
-
             var session = userSessionCtrl.createSession(req, res, info, false);
             userSessionCtrl.logSession(req, res, session);
 
@@ -54,9 +46,7 @@ exports.login = function (req, res, next) {
 
         req.login(user, function (err) {
 
-            if (err) {
-                return next(err);
-            }
+            if (err) return res.status(400).send(err);
 
             var session = userSessionCtrl.createSession(req, res, info, true);
             userSessionCtrl.logSession(req, res, session);
@@ -74,18 +64,10 @@ exports.login = function (req, res, next) {
 };
 
 exports.update = function (req, res, next) {
-
-    var query = req.models.User.findByIdAndUpdate(req.params.id, {
-        username: req.body.username
-    }, { new: true });
-
+    var query = req.models.User.findByIdAndUpdate(req.params.id, { username: req.body.username }, { new: false });
     query.exec(function (err, result) {
-        if (err) {
-            return next(err);
-        }
-
+        if (err) return res.status(400).send(err);
         return res.json(result);
-
     });
 };
 
