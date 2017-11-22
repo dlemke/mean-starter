@@ -3,6 +3,9 @@ import { IUserModel } from '../models/IUserModel';
 import { Observable } from 'rxjs/RX';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
+const headers = new Headers({ 'Content-Type': 'application/json' });
+const options = new RequestOptions({ headers: headers });
+
 @Injectable()
 export class UserService {
   currentUser: IUserModel;
@@ -10,9 +13,7 @@ export class UserService {
   constructor(private http: Http) { }
 
   register(userName: string, password: string) {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    let registrationInfo = { username: userName, password: password };
+    const registrationInfo = { username: userName, password: password };
 
     return this.http.post('/api/users/register', JSON.stringify(registrationInfo), options)
       .do(response => {
@@ -24,9 +25,7 @@ export class UserService {
   }
 
   login(userName: string, password: string) {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    let loginInfo = { username: userName, password: password };
+    const loginInfo = { username: userName, password: password };
 
     return this.http.post('/api/users/login', JSON.stringify(loginInfo), options)
       .do(response => {
@@ -38,9 +37,7 @@ export class UserService {
   }
 
   update(user_id, userName: string) {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    let updateInfo = { username: userName };
+    const updateInfo = { username: userName };
 
     return this.http.put('/api/users/update/' + user_id, JSON.stringify(updateInfo), options)
       .do(response => {
